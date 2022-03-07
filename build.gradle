@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "$SPRING_BOOT_VERSION"
+    id 'io.spring.dependency-management' version "$SPRING_BOOT_DEPENDENCY_MANAGEMENT_VERSION"
+}
+
+group 'com.investmentbank.fx'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+configurations.all {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation "io.micrometer:micrometer-registry-atlas:$MICROMETER_VERSION"
+    implementation "com.codepoetics:protonpack:$PROTONPACK_VERSION"
+    runtimeOnly "io.micrometer:micrometer-registry-prometheus:$MICROMETER_VERSION"
+    // Spring Doc
+    implementation "org.springdoc:springdoc-openapi-ui:$SPRING_DOC_VERSION"
+
+    // Common libs
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:$SLF4J_VERSION"
+    implementation "com.google.guava:guava:$GUAVA_VERSION"
+    implementation "org.apache.commons:commons-lang3:$APACHE_COMMONS_LANG_VERSION"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$LOMBOK_VERSION"
+    annotationProcessor "org.projectlombok:lombok:$LOMBOK_VERSION"
+    testCompileOnly  "org.projectlombok:lombok:$LOMBOK_VERSION"
+    testAnnotationProcessor  "org.projectlombok:lombok:$LOMBOK_VERSION"
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$JUNIT_VERSION"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$JACKSON_VERSION"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$JUNIT_VERSION"
+}
+
+test {
+    useJUnitPlatform()
+}
